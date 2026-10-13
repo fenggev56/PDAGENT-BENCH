@@ -1,8 +1,8 @@
 # PDAGENT-BENCH Leaderboard
 
-**PDAGENT-BENCH** measures how well large language models handle VLSI **physical design** (backend) work. It has 343 tasks in eight categories: foundational knowledge, root-cause analysis and tool-report reading, through to writing exact ICC2, Innovus, Formality and PrimeTime ECO commands.
+**PDAGENT-BENCH** measures how well large language models handle VLSI **physical design** (backend) work. It has 343 tasks in eight categories: foundational knowledge, root-cause analysis and tool-report reading, through to writing exact place-and-route, formal-verification and ECO commands.
 
-**Interactive leaderboard: https://fenggev56.github.io/PDAGENT-BENCH/**
+**Interactive leaderboard: https://fenggev56.github.io/PDAGENT-BENCH/**  ·  **Paper: [arXiv:2606.17253](https://arxiv.org/abs/2606.17253)**
 
 [![PDAGENT-BENCH leaderboard](assets/leaderboard.png)](https://fenggev56.github.io/PDAGENT-BENCH/)
 
@@ -11,7 +11,7 @@
 Overall is the unweighted mean of the category scores. † = text-only model, averaged over the 6 categories that need no image input.
 
 <!-- LEADERBOARD:START -->
-| # | Model | Round | Overall | Foundational | Root-Cause | Report | STA | FM | ECO | ICC2 | Innovus |
+| # | Model | Round | Overall | Foundational | Root-Cause | Report | STA | FM | ECO | P&R Vendor 1 | P&R Vendor 2 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | GPT-5.5 | R1 | **65.1** | 80.4 | 73.3 | 74.6 | 72.7 | 81.8 | 50.0 | 45.5 | 42.2 |
 | 2 | GPT-5.6 Sol | R2 | **63.4** | 85.7 | 65.7 | 68.2 | 72.7 | 81.8 | 40.0 | 52.3 | 41.1 |
@@ -31,7 +31,7 @@ Overall is the unweighted mean of the category scores. † = text-only model, av
 | 16 | Qwen3-8B | R1 | **21.2**† | 54.3 | 25.5 | N/A | N/A | 27.3 | 0.0 | 8.0 | 12.2 |
 <!-- LEADERBOARD:END -->
 
-**R2** = latest evaluation (2026-09-23). **R1** = earlier evaluation reported in the paper. Rule-checked categories (STA, FM, ECO, ICC2, Innovus) use identical checkers in both rounds. The three judged categories (Foundational, Root-Cause, Report) were scored by different judges in the two rounds, so compare those columns within a round only.
+**R2** = latest evaluation (2026-09-23). **R1** = earlier evaluation reported in the paper. Rule-checked categories (STA, FM, ECO, P&R Vendor 1, P&R Vendor 2) use identical checkers in both rounds. The three judged categories (Foundational, Root-Cause, Report) were scored by different judges in the two rounds, so compare those columns within a round only.
 
 ## Categories
 
@@ -39,12 +39,12 @@ Overall is the unweighted mean of the category scores. † = text-only model, av
 |---|---|---|---|---|
 | Foundational Knowledge | Understanding | 90 | LLM judge (0–10 rubric) | Floorplanning, CTS, STA, DFT, extraction, device physics, flow inputs/outputs |
 | Root-Cause Analysis | Understanding | 21 | LLM judge (0–10 rubric) | Diagnosing real backend failures (hold, IR drop, congestion, SDC, multi-voltage) and proposing fixes |
-| Report Comprehension | Understanding | 11 | LLM judge (0–10 rubric) | Reading Innovus / PrimeTime reports and screenshots (multimodal) |
+| Report Comprehension | Understanding | 11 | LLM judge (0–10 rubric) | Reading P&R and timing sign-off tool reports and screenshots (multimodal) |
 | Static Timing Analysis | Understanding | 11 | Rule checker | Timing calculations and multiple-choice STA, some from circuit diagrams (multimodal) |
 | Formal Verification | Script Generation | 22 | Rule checker | Exact Formality commands |
 | ECO | Script Generation | 10 | Rule checker | PrimeTime ECO commands |
-| P&R Script (ICC2) | Script Generation | 88 | Rule checker | Exact IC Compiler II Tcl across the full P&R flow |
-| P&R Script (Innovus) | Script Generation | 90 | Rule checker | Exact Innovus Tcl across the full P&R flow |
+| P&R Vendor 1 | Script Generation | 88 | Rule checker | Exact Tcl for a commercial place-and-route tool across the full flow |
+| P&R Vendor 2 | Script Generation | 90 | Rule checker | Exact Tcl for a second commercial place-and-route tool across the full flow |
 
 ## Protocol
 
@@ -65,17 +65,18 @@ scripts/build_data.py      rebuilds data/ and the table above from evaluation ou
 
 ## Adding a model
 
-1. Run the evaluation harness for the new model. It writes `results/<subset>/<model>/summary.json`.
+1. Run the evaluation harness for the new model. It writes `results/<subset>/<model>/summary.json`. The eval path and subset folder names go in `scripts/local_config.json` (not tracked).
 2. Add the model to `LATER_MODELS` in `scripts/build_data.py`.
-3. Run `python3 scripts/build_data.py --later-eval /path/to/eval`. This regenerates `data/` and the README table.
+3. Run `python3 scripts/build_data.py`. This regenerates `data/` and the README table.
 4. Commit and push. GitHub Pages redeploys automatically.
 
 ## Citation
 
 ```bibtex
-@misc{pdagentbench2026,
-  title  = {PDAGENT-BENCH: Benchmarking LLM Agents for VLSI Physical Design},
-  year   = {2026},
-  url    = {https://github.com/fenggev56/PDAGENT-BENCH}
+@article{li2026pdagentbench,
+  title   = {PDAGENT-BENCH: Characterizing, Grounding, and Architecting LLM/VLM Agents for VLSI Physical Design},
+  author  = {Li, Qiufeng and Chen, Rongqian and Cheng, Quan and Wang, Chengxuan and Tang, Sizhe and Ho, Chia-Tung and Pan, David Z. and Lan, Tian and Cao, Weidong},
+  journal = {arXiv preprint arXiv:2606.17253},
+  year    = {2026}
 }
 ```

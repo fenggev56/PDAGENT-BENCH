@@ -6,7 +6,7 @@ Sources
                                    later evaluation (pdagent-bench_9.23eval harness)
 
 Usage
-  python3 scripts/build_data.py [--later-eval /path/to/pdagent-bench_9.23eval]
+  python3 scripts/build_data.py [--later-eval /path/to/eval]   (defaults from scripts/local_config.json)
 
 To add a new model: run the harness for it, add an entry to LATER_MODELS below,
 then re-run this script.
@@ -18,7 +18,8 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_LATER = Path("/home/G47290551/hf-datasets/agent-tool-backup/pdagent-bench_9.23eval")
+# Local settings, kept out of git: {"later_eval": "/path/to/eval", "subset_dirs": {category key: results dir}}
+LOCAL = ROOT / "scripts" / "local_config.json"
 
 # key, display name, short label, N items, grader, group, description
 CATEGORIES = [
@@ -27,21 +28,18 @@ CATEGORIES = [
     ("root_cause", "Root-Cause Analysis", "Root-Cause", 21, "judge", "Understanding",
      "Diagnose real backend failures (hold fixing, IR drop, congestion, SDC, multi-voltage) and propose fixes."),
     ("report", "Report Comprehension", "Report", 11, "judge", "Understanding",
-     "Read EDA tool reports and screenshots (Innovus, PrimeTime) and explain what they show. Multimodal."),
+     "Read EDA tool reports and screenshots (P&R and timing sign-off tools) and explain what they show. Multimodal."),
     ("sta", "Static Timing Analysis", "STA", 11, "rule", "Understanding",
      "Timing calculations and multiple-choice STA questions, several from circuit diagrams. Multimodal."),
     ("fm", "Formal Verification", "FM", 22, "rule", "Script Generation",
      "Exact Formality commands for library setup, read, match/verify and reporting."),
     ("eco", "ECO", "ECO", 10, "rule", "Script Generation",
      "PrimeTime ECO commands: timing fixes, false paths, change lists, violation reports."),
-    ("icc2", "P&R Script (ICC2)", "ICC2", 88, "rule", "Script Generation",
-     "Exact IC Compiler II Tcl for setup, floorplan, power, placement, CTS, routing, EM and antenna."),
-    ("innovus", "P&R Script (Innovus)", "Innovus", 90, "rule", "Script Generation",
-     "Exact Innovus Tcl from initialization and MMMC through floorplan, CTS, ECO and sign-off export."),
+    ("pr_vendor1", "P&R Vendor 1", "P&R Vendor 1", 88, "rule", "Script Generation",
+     "Exact Tcl for a commercial place-and-route tool: setup, floorplan, power, placement, CTS, routing, EM and antenna."),
+    ("pr_vendor2", "P&R Vendor 2", "P&R Vendor 2", 90, "rule", "Script Generation",
+     "Exact Tcl for a second commercial place-and-route tool: initialization and MMMC through floorplan, CTS, ECO and sign-off export."),
 ]
-# category key -> results subset dir in the later-eval harness
-SUBSET = {"foundational": "basic", "root_cause": "root_cause", "report": "report", "sta": "sta",
-          "fm": "FM", "eco": "ECO", "icc2": "ICC2", "innovus": "innovus"}
 
 # model name in round1 csv -> (provider, open weights, multimodal)
 EARLIER_MODELS = {
@@ -98,12 +96,12 @@ def earlier():
     return out
 
 
-def later(root):
+def later(root, subset):
     out = []
     for d, (name, prov, open_w, api) in LATER_MODELS.items():
         scores = {}
         for k, *_ in CATEGORIES:
-            f = root / "results" / SUBSET[k] / d / "summary.json"
+            f = root / "results" / subset.get(k, k) / d / "summary.json"
             if not f.exists():
                 continue
             s = json.load(open(f))
@@ -139,9 +137,11 @@ def readme_table(models):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--later-eval", type=Path, default=DEFAULT_LATER)
+    ap.add_argument("--later-eval", type=Path)
     a = ap.parse_args()
-    models = earlier() + later(a.later_eval)
+    local = json.load(open(LOCAL)) if LOCAL.exists() else {}
+    root = a.later_eval or Path(local["later_eval"])
+    models = earlier() + later(root, local.get("subset_dirs", {}))
     for m in models:
         m["overall"] = {"p1": overall(m, "p1"), "p5": overall(m, "p5")}
         m["n_categories"] = len(m["scores"])

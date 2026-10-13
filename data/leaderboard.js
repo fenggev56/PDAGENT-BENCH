@@ -26,7 +26,7 @@ window.LEADERBOARD = {
    "n": 11,
    "grader": "judge",
    "group": "Understanding",
-   "desc": "Read EDA tool reports and screenshots (Innovus, PrimeTime) and explain what they show. Multimodal."
+   "desc": "Read EDA tool reports and screenshots (P&R and timing sign-off tools) and explain what they show. Multimodal."
   },
   {
    "key": "sta",
@@ -56,22 +56,22 @@ window.LEADERBOARD = {
    "desc": "PrimeTime ECO commands: timing fixes, false paths, change lists, violation reports."
   },
   {
-   "key": "icc2",
-   "name": "P&R Script (ICC2)",
-   "short": "ICC2",
+   "key": "pr_vendor1",
+   "name": "P&R Vendor 1",
+   "short": "P&R Vendor 1",
    "n": 88,
    "grader": "rule",
    "group": "Script Generation",
-   "desc": "Exact IC Compiler II Tcl for setup, floorplan, power, placement, CTS, routing, EM and antenna."
+   "desc": "Exact Tcl for a commercial place-and-route tool: setup, floorplan, power, placement, CTS, routing, EM and antenna."
   },
   {
-   "key": "innovus",
-   "name": "P&R Script (Innovus)",
-   "short": "Innovus",
+   "key": "pr_vendor2",
+   "name": "P&R Vendor 2",
+   "short": "P&R Vendor 2",
    "n": 90,
    "grader": "rule",
    "group": "Script Generation",
-   "desc": "Exact Innovus Tcl from initialization and MMMC through floorplan, CTS, ECO and sign-off export."
+   "desc": "Exact Tcl for a second commercial place-and-route tool: initialization and MMMC through floorplan, CTS, ECO and sign-off export."
   }
  ],
  "rounds": {
@@ -126,11 +126,11 @@ window.LEADERBOARD = {
      "p1": 0.1,
      "p5": 0.1
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.068,
      "p5": 0.102
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.122,
      "p5": 0.133
     }
@@ -178,11 +178,11 @@ window.LEADERBOARD = {
      "p1": 0.1,
      "p5": 0.1
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.091,
      "p5": 0.125
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.111,
      "p5": 0.178
     }
@@ -220,11 +220,11 @@ window.LEADERBOARD = {
      "p1": 0.0,
      "p5": 0.0
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.08,
      "p5": 0.102
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.122,
      "p5": 0.144
     }
@@ -262,11 +262,11 @@ window.LEADERBOARD = {
      "p1": 0.3,
      "p5": 0.5
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.34,
      "p5": 0.364
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.256,
      "p5": 0.356
     }
@@ -304,11 +304,11 @@ window.LEADERBOARD = {
      "p1": 0.3,
      "p5": 0.5
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.216,
      "p5": 0.352
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.233,
      "p5": 0.356
     }
@@ -356,11 +356,11 @@ window.LEADERBOARD = {
      "p1": 0.3,
      "p5": 0.3
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.057,
      "p5": 0.114
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.133,
      "p5": 0.189
     }
@@ -408,11 +408,11 @@ window.LEADERBOARD = {
      "p1": 0.2,
      "p5": 0.2
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.318,
      "p5": 0.432
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.278,
      "p5": 0.311
     }
@@ -460,11 +460,11 @@ window.LEADERBOARD = {
      "p1": 0.5,
      "p5": 0.5
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.341,
      "p5": 0.352
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.289,
      "p5": 0.311
     }
@@ -512,11 +512,11 @@ window.LEADERBOARD = {
      "p1": 0.4,
      "p5": 0.5
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.341,
      "p5": 0.375
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.367,
      "p5": 0.411
     }
@@ -564,11 +564,11 @@ window.LEADERBOARD = {
      "p1": 0.5,
      "p5": 0.6
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.455,
      "p5": 0.58
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.422,
      "p5": 0.511
     }
@@ -616,11 +616,11 @@ window.LEADERBOARD = {
      "p1": 0.5,
      "p5": 0.5
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.295,
      "p5": 0.398
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.267,
      "p5": 0.356
     }
@@ -666,11 +666,11 @@ window.LEADERBOARD = {
      "p1": 0.4,
      "p5": 0.5
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.3636,
      "p5": 0.4659
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.3222,
      "p5": 0.4444
     }
@@ -716,11 +716,11 @@ window.LEADERBOARD = {
      "p1": 0.6,
      "p5": 0.5
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.3864,
      "p5": 0.4545
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.3667,
      "p5": 0.4667
     }
@@ -766,11 +766,11 @@ window.LEADERBOARD = {
      "p1": 0.4,
      "p5": 0.4
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.5227,
      "p5": 0.6023
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.4111,
      "p5": 0.5111
     }
@@ -816,11 +816,11 @@ window.LEADERBOARD = {
      "p1": 0.4,
      "p5": 0.6
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.2727,
      "p5": 0.3409
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.3333,
      "p5": 0.3667
     }
@@ -866,11 +866,11 @@ window.LEADERBOARD = {
      "p1": 0.4,
      "p5": 0.4
     },
-    "icc2": {
+    "pr_vendor1": {
      "p1": 0.3977,
      "p5": 0.5341
     },
-    "innovus": {
+    "pr_vendor2": {
      "p1": 0.4,
      "p5": 0.4444
     }
