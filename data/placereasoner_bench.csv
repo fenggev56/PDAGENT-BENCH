@@ -1,0 +1,113 @@
+aspect,design,method,status,wns,tns,drc,wl_um,power_w,area_um2,runtime_s,tokens_k
+1:1,ariane133,RTL-MP,routed,-0.10,-4.60,0,5233982,0.265,729834,127.0,
+1:1,ariane133,DREAMPlace,fail: timeout,,,,,,,11.00,
+1:1,ariane133,ChiPFormer,routed,-0.04,-4.61,0,6211024,0.304,737387,16.96,
+1:1,ariane133,SA,routed,-76.52,-579878,80223,7135797,0.286,718246,0.240,
+1:1,ariane133,PlaceReasoner-Beta,routed,-0.02,-0.35,0,5622394,0.258,728851,828.7,348.6
+1:1,ariane133,Qwen3-VL-8B,fail: DRT-0073,,,,,,,3123.4,689.2
+1:1,ariane133,Qwen3-VL-30B,routed,-0.02,-0.13,18166,6123046,0.283,728261,255.0,572.7
+1:1,ariane81,RTL-MP,routed,-0.14,-8.43,0,5577716,0.184,694809,91.8,
+1:1,ariane81,DREAMPlace,fail: timeout,,,,,,,9.53,
+1:1,ariane81,ChiPFormer,routed,-1.02,-2103,0,6948313,0.177,700271,15.12,
+1:1,ariane81,SA,fail: placed-only,,,,,,,0.178,
+1:1,ariane81,PlaceReasoner-Beta,routed,-0.04,-1.20,0,5203922,0.171,692142,847.6,362.6
+1:1,ariane81,Qwen3-VL-8B,routed,-0.09,-6.24,0,6631628,0.198,693184,2449.0,759.3
+1:1,ariane81,Qwen3-VL-30B,routed,-0.09,-13.95,0,6511947,0.203,694924,235.3,602.4
+1:1,bp_be,RTL-MP,routed,-0.28,-23.54,0,2354232,0.123,240519,85.9,
+1:1,bp_be,DREAMPlace,routed,-0.47,-29.81,63393,3814816,,243381,5.94,
+1:1,bp_be,ChiPFormer,routed,-0.58,-54,0,2929620,0.131,243411,5.75,
+1:1,bp_be,SA,routed,-0.24,-21.26,37695,2411088,0.123,239997,0.032,
+1:1,bp_be,PlaceReasoner-Beta,routed,-0.13,-9.42,0,2287187,0.118,238089,722.3,208.4
+1:1,bp_be,Qwen3-VL-8B,routed,-0.29,-28.59,0,2435295,0.107,238967,349.7,308.9
+1:1,bp_be,Qwen3-VL-30B,routed,-0.16,-13.28,0,2368477,0.102,238576,63.1,253.5
+1:1,bp_fe,RTL-MP,routed,-0.04,-0.16,0,1607291,0.143,215331,97.9,
+1:1,bp_fe,DREAMPlace,routed,-0.37,-41.92,65340,2743022,,223308,5.14,
+1:1,bp_fe,ChiPFormer,routed,-0.46,-35,0,1795024,0.158,223786,5.74,
+1:1,bp_fe,SA,routed,-0.19,-1.06,0,1671812,0.145,217188,0.032,
+1:1,bp_fe,PlaceReasoner-Beta,routed,-0.03,-0.07,0,1553678,0.141,213874,601.8,175.6
+1:1,bp_fe,Qwen3-VL-8B,routed,-0.13,-4.75,0,1550338,0.126,215049,412.7,276.9
+1:1,bp_fe,Qwen3-VL-30B,routed,-0.19,-7.20,0,1710046,0.139,221628,187.9,373.5
+1:1,ethernet,RTL-MP,routed,-0.31,-1.46,14,730251,0.0142,110629,102.5,
+1:1,ethernet,DREAMPlace,routed,-0.30,-1.38,30699,1496848,,112452,7.21,
+1:1,ethernet,ChiPFormer,routed,-0.30,-1.50,0,719208,0.014,110765,10.60,
+1:1,ethernet,SA,routed,-0.30,-1.35,27609,761707,0.0142,110754,0.096,
+1:1,ethernet,PlaceReasoner-Beta,routed,-0.30,-1.44,0,760262,0.0142,110597,643.7,295.9
+1:1,ethernet,Qwen3-VL-8B,routed,-0.30,-1.45,0,735008,0.0171,110435,2252.7,780.8
+1:1,ethernet,Qwen3-VL-30B,routed,-0.28,-1.31,0,784869,0.0179,110483,121.7,398.7
+1:1,swerv_wrapper,RTL-MP,routed,-0.52,-424.43,0,3757454,0.239,648507,122.2,
+1:1,swerv_wrapper,DREAMPlace,fail: timeout,,,,,,,7.20,
+1:1,swerv_wrapper,ChiPFormer,routed,-1.55,-1384,0,4593545,0.246,651840,8.89,
+1:1,swerv_wrapper,SA,routed,-0.51,-421.84,76026,4238062,0.240,649332,0.060,
+1:1,swerv_wrapper,PlaceReasoner-Beta,routed,-0.42,-409.13,0,3447721,0.243,647807,811.9,335.7
+1:1,swerv_wrapper,Qwen3-VL-8B,routed,-0.60,-617.00,0,4067535,0.249,646917,2060.6,547.9
+1:1,swerv_wrapper,Qwen3-VL-30B,routed,-0.56,-558.07,0,4103206,0.245,646256,92.9,309.4
+1:1,vga_lcd,RTL-MP,routed,-0.78,-498.02,45,2471807,0.182,650863,48.0,
+1:1,vga_lcd,DREAMPlace,routed,-0.85,-146.70,62598,3804114,,650838,8.56,
+1:1,vga_lcd,ChiPFormer,routed,-0.82,-1180,0,2880834,0.198,655252,11.15,
+1:1,vga_lcd,SA,routed,-0.81,-36.16,67293,2391472,0.184,649634,0.104,
+1:1,vga_lcd,PlaceReasoner-Beta,routed,-0.74,-37.73,0,2342025,0.18,651477,785.1,386.4
+1:1,vga_lcd,Qwen3-VL-8B,routed,-0.89,-41.92,0,2449050,0.190,648133,2084.3,730.6
+1:1,vga_lcd,Qwen3-VL-30B,routed,-0.71,-27.86,0,2455068,0.192,647852,170.9,466.3
+1:1,VeriGPU,RTL-MP,routed,-0.30,-12.76,0,1753666,0.0931,274654,96.1,
+1:1,VeriGPU,DREAMPlace,routed,-0.26,-13.21,51828,2322311,,274662,6.44,
+1:1,VeriGPU,ChiPFormer,routed,-0.26,-13,0,1807519,0.095,275147,6.30,
+1:1,VeriGPU,SA,routed,-0.32,-13.55,61089,1751564,0.0943,275045,0.029,
+1:1,VeriGPU,PlaceReasoner-Beta,routed,-0.25,-12.31,0,1697586,0.0911,274109,625.7,205.6
+1:1,VeriGPU,Qwen3-VL-8B,routed,-0.25,-17.43,0,1705359,0.128,274236,386.4,326.3
+1:1,VeriGPU,Qwen3-VL-30B,routed,-0.28,-15.68,0,1810348,0.131,274467,65.0,242.8
+2:1,ariane133,RTL-MP,routed,-0.12,-25.29,0,6033112,0.276,731337,,
+2:1,ariane133,DREAMPlace,fail: timeout,,,,,,,,
+2:1,ariane133,ChiPFormer,routed,-0.39,-620,0,7079270,0.278,738872,,
+2:1,ariane133,SA,fail: GP1,,,,,,,,
+2:1,ariane133,PlaceReasoner-Beta,routed,-0.02,-0.08,0,5690597,0.285,730228,834.9,357.1
+2:1,ariane133,Qwen3-VL-8B,fail: GRT-0116,,,,,,,2228.3,479.9
+2:1,ariane133,Qwen3-VL-30B,fail: DRT-0073,,,,,,,208.9,600.6
+2:1,ariane81,RTL-MP,routed,-0.10,-35.10,0,6180469,0.179,696239,,
+2:1,ariane81,DREAMPlace,fail: timeout,,,,,,,,
+2:1,ariane81,ChiPFormer,routed,-1.82,-5617,0,9503525,0.181,727526,,
+2:1,ariane81,SA,fail: capped,,,,,,,,
+2:1,ariane81,PlaceReasoner-Beta,routed,-0.05,-6.81,0,5798709,0.194,698754,861.2,401.7
+2:1,ariane81,Qwen3-VL-8B,routed,-0.40,-310.10,28,7017977,0.202,694691,778.8,330.1
+2:1,ariane81,Qwen3-VL-30B,routed,-0.09,-43.12,1,5923522,0.193,692020,524.7,579.2
+2:1,bp_be,RTL-MP,routed,-0.37,-38.96,0,2652279,0.123,240762,,
+2:1,bp_be,DREAMPlace,fail: timeout,,,,,,,,
+2:1,bp_be,ChiPFormer,fail: segfault,,,,,,,,
+2:1,bp_be,SA,routed,-0.36,-36.62,34190,2749978,0.124,241710,,
+2:1,bp_be,PlaceReasoner-Beta,routed,-0.22,-18.06,1,2873409,0.109,240882,728.9,241.6
+2:1,bp_be,Qwen3-VL-8B,routed,-0.39,-31.03,0,2647452,0.107,239686,216.1,237.2
+2:1,bp_be,Qwen3-VL-30B,fail: GRT-0116,,,,,,,256.2,480.3
+2:1,bp_fe,RTL-MP,routed,-0.18,-6.12,0,1609885,0.143,215198,,
+2:1,bp_fe,DREAMPlace,fail: timeout,,,,,,,,
+2:1,bp_fe,ChiPFormer,routed,-0.05,-0.21,5,2286401,0.149,216837,,
+2:1,bp_fe,SA,routed,-0.17,-6.55,20479,1662195,,218725,,
+2:1,bp_fe,PlaceReasoner-Beta,routed,-0.11,-0.23,0,1638383,0.131,217638,627.4,186.7
+2:1,bp_fe,Qwen3-VL-8B,routed,-0.09,-2.43,0,1719403,0.135,219808,202.9,204.9
+2:1,bp_fe,Qwen3-VL-30B,routed,-0.11,-1.19,0,1637963,0.126,215246,62.8,272.8
+2:1,ethernet,RTL-MP,routed,-0.33,-1.62,14,812042,0.014,110330,,
+2:1,ethernet,DREAMPlace,routed,-0.30,-1.38,34020,1383506,,112103,,
+2:1,ethernet,ChiPFormer,routed,-0.33,-1.60,0,797665,0.014,110403,,
+2:1,ethernet,SA,routed,-0.27,-1.31,10394,867444,,110537,,
+2:1,ethernet,PlaceReasoner-Beta,routed,-0.28,-1.34,0,825144,0.0139,110333,684.2,327.5
+2:1,ethernet,Qwen3-VL-8B,routed,-0.29,-1.43,0,761143,0.017,110252,554.9,399.0
+2:1,ethernet,Qwen3-VL-30B,routed,-0.26,-1.27,0,796341,0.0172,110237,188.8,498.3
+2:1,swerv_wrapper,RTL-MP,routed,-0.64,-528.28,1421,3779122,0.235,647771,,
+2:1,swerv_wrapper,DREAMPlace,fail: timeout,,,,,,,,
+2:1,swerv_wrapper,ChiPFormer,routed,-1.40,-1616,1456,6958764,0.260,686355,,
+2:1,swerv_wrapper,SA,fail: placed-only,,,,,,,,
+2:1,swerv_wrapper,PlaceReasoner-Beta,routed,-0.58,-476.28,2,3925621,0.242,648145,716.8,415.6
+2:1,swerv_wrapper,Qwen3-VL-8B,routed,-0.67,-755.17,0,4471772,0.245,646254,335.9,214.1
+2:1,swerv_wrapper,Qwen3-VL-30B,routed,-0.82,-927.46,63,4918313,0.248,647625,102.9,397.6
+2:1,vga_lcd,RTL-MP,routed,-0.72,-29.70,171,2354087,0.180,647137,,
+2:1,vga_lcd,DREAMPlace,routed,-0.77,-40.80,52227,3089394,,649017,,
+2:1,vga_lcd,ChiPFormer,routed,-0.88,-2317,33,3688031,0.198,654877,,
+2:1,vga_lcd,SA,fail: GP1,,,,,,,,
+2:1,vga_lcd,PlaceReasoner-Beta,routed,-0.76,-33.13,1,2547982,0.183,649875,748.6,348.3
+2:1,vga_lcd,Qwen3-VL-8B,routed,-0.76,-1154.16,25,2605124,0.187,648128,816.1,424.9
+2:1,vga_lcd,Qwen3-VL-30B,routed,-0.91,-226.91,35,2750093,0.193,649266,125.7,468.3
+2:1,VeriGPU,RTL-MP,routed,-0.30,-16.98,22,2009432,0.091,274307,,
+2:1,VeriGPU,DREAMPlace,routed,-0.49,-19.39,62832,2727467,,274799,,
+2:1,VeriGPU,ChiPFormer,routed,-0.28,-17,0,2108273,0.093,275311,,
+2:1,VeriGPU,SA,routed,-0.28,-17.51,45375,1996265,,275007,,
+2:1,VeriGPU,PlaceReasoner-Beta,routed,-0.28,-13.08,0,1896523,0.101,274461,367.1,225.6
+2:1,VeriGPU,Qwen3-VL-8B,routed,-0.45,-54.06,0,1906068,0.129,274392,227.8,327.8
+2:1,VeriGPU,Qwen3-VL-30B,routed,-0.29,-15.41,0,1931436,0.128,274339,199.8,389.8

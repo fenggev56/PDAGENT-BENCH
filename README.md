@@ -2,7 +2,7 @@
 
 **PDAGENT-BENCH** measures how well large language models handle VLSI **physical design** (backend) work. It has 343 tasks in eight categories: foundational knowledge, root-cause analysis and tool-report reading, through to writing exact place-and-route, formal-verification and ECO commands.
 
-**Interactive leaderboard: https://fenggev56.github.io/PDAGENT-BENCH/**  ·  **Paper: [arXiv:2606.17253](https://arxiv.org/abs/2606.17253)**
+**Interactive leaderboard: https://fenggev56.github.io/PDAGENT-BENCH/**  ·  **Paper: [arXiv:2606.17253](https://arxiv.org/abs/2606.17253)**  ·  **Open-source version: [Hugging Face](https://huggingface.co/datasets/fenggev566/PDAgent-Bench_open)**
 
 [![PDAGENT-BENCH leaderboard](assets/leaderboard.png)](https://fenggev56.github.io/PDAGENT-BENCH/)
 
@@ -33,6 +33,35 @@ Overall is the unweighted mean of the category scores. † = text-only model, av
 
 **R2** = latest evaluation (2026-09-23). **R1** = earlier evaluation reported in the paper. Rule-checked categories (STA, FM, ECO, P&R Vendor 1, P&R Vendor 2) use identical checkers in both rounds. The three judged categories (Foundational, Root-Cause, Report) were scored by different judges in the two rounds, so compare those columns within a round only.
 
+## PlaceReasoner-Bench: end-to-end macro placement
+
+16 tasks: 8 open-source designs (ariane133, ariane81, bp_be, bp_fe, ethernet, swerv_wrapper, VeriGPU, vga_lcd), each at a square (1:1) and an elongated (2:1) die. A method outputs every macro's position and orientation; the full open flow (Yosys, OpenROAD, Nangate45, FakeRAM 2.0) then places, routes and signs off the design, and it is scored on post-route PPA. Our agent **PlaceReasoner-Beta** runs on **Claude Opus 4.8**; the same agent on open-weight Qwen3-VL backbones is shown for comparison.
+
+<!-- PLACEREASONER:START -->
+| Method | Type | Routed (< 1,000 DRC) | DRC-clean | Best TNS |
+|---|---|---|---|---|
+| **PlaceReasoner-Beta (Claude Opus 4.8)** | LLM agent | 16/16 | 13/16 | 11/16 |
+| PlaceReasoner-Beta (Qwen3-VL-30B) | LLM agent | 13/16 | 10/16 | 3/16 |
+| RTL-MP | classical | 15/16 | 10/16 | 1/16 |
+| ChiPFormer | classical | 14/16 | 12/16 | 1/16 |
+| PlaceReasoner-Beta (Qwen3-VL-8B) | LLM agent | 14/16 | 12/16 | 0/16 |
+| SA | classical | 1/16 | 1/16 | 0/16 |
+| DREAMPlace | classical | 0/16 | 0/16 | 0/16 |
+<!-- PLACEREASONER:END -->
+
+A run counts as routed when detailed routing completes with fewer than 1,000 DRC violations. Best TNS = best post-route total negative slack on the task among routed runs. Per-task WNS, TNS, DRC, wirelength, power, area, runtime and tokens (paper Tables 6 and 7, without the CWI / CWS ablations) are in [`data/placereasoner_bench.csv`](data/placereasoner_bench.csv) and on the [interactive page](https://fenggev56.github.io/PDAGENT-BENCH/#placereasoner).
+
+![Macro placements produced by PlaceReasoner-Beta](assets/placereasoner_fig9.png)
+
+*Macro placements produced by PlaceReasoner-Beta (Claude Opus 4.8) on 15 PlaceReasoner-Bench tasks, with each macro's pin side marked: (a)–(h) the eight designs at 1:1 and (i)–(o) seven of them at 2:1. Macros are grouped against the periphery, and each group's pin side faces the standard-cell region it serves.*
+
+## Open-source version
+
+[**PDAgent-Bench_open**](https://huggingface.co/datasets/fenggev566/PDAgent-Bench_open) on Hugging Face is the open release of the benchmark. It runs on open tools only (Yosys, OpenROAD, Nangate45, FakeRAM 2.0) and contains:
+
+- 133 QA tasks: Foundational Knowledge (90), Root-Cause Analysis (21), Report Comprehension (11) and Static Timing Analysis (11)
+- PlaceReasoner-Bench: the 16 end-to-end macro-placement tasks above, with netlists, SDC, LEF, LIB, DEF and cluster files
+
 ## Categories
 
 | Category | Group | Tasks | Grading | What it tests |
@@ -60,6 +89,8 @@ index.html                 the leaderboard site (static, served by GitHub Pages)
 data/leaderboard.json      all scores (pass@1 / pass@5 per model per category)
 data/leaderboard.js        same data, loaded by index.html
 data/round1_earlier.csv    earlier-round scores, as reported in the paper
+data/placereasoner_bench.csv  PlaceReasoner-Bench per-task post-route results
+data/placereasoner.json    the same, with per-method summary (also .js for the page)
 scripts/build_data.py      rebuilds data/ and the table above from evaluation outputs
 ```
 

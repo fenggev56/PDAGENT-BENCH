@@ -135,6 +135,72 @@ def readme_table(models):
     return "\n".join(L)
 
 
+# ---------------------------------------------------------------- PlaceReasoner-Bench (end-to-end) ----
+# data/placereasoner_bench.csv: paper Tables 6 (1:1) and 7 (2:1), ablation rows (CWI, CWS) removed.
+PR_METHODS = [
+    # csv name, display name, kind, backbone
+    ("PlaceReasoner-Beta", "PlaceReasoner-Beta", "agent", "Claude Opus 4.8"),
+    ("Qwen3-VL-30B", "PlaceReasoner-Beta", "agent", "Qwen3-VL-30B"),
+    ("Qwen3-VL-8B", "PlaceReasoner-Beta", "agent", "Qwen3-VL-8B"),
+    ("RTL-MP", "RTL-MP", "classical", None),
+    ("ChiPFormer", "ChiPFormer", "classical", None),
+    ("DREAMPlace", "DREAMPlace", "classical", None),
+    ("SA", "SA", "classical", None),
+]
+DRC_BUDGET = 1000  # runs with >= this many DRC violations are not comparable (paper convention)
+
+
+def placereasoner():
+    rows = []
+    for r in csv.DictReader(open(ROOT / "data" / "placereasoner_bench.csv")):
+        out = {"aspect": r["aspect"], "design": r["design"], "method": r["method"], "status": r["status"]}
+        for k in ("wns", "tns", "power_w", "runtime_s", "tokens_k"):
+            out[k] = float(r[k]) if r[k] else None
+        for k in ("drc", "wl_um", "area_um2"):
+            out[k] = int(r[k]) if r[k] else None
+        out["valid"] = out["status"] == "routed" and out["tns"] is not None and out["drc"] is not None and out["drc"] < DRC_BUDGET
+        rows.append(out)
+    summary = {m: {"routed": 0, "clean": 0, "best_tns": 0} for m, *_ in PR_METHODS}
+    for key in {(r["aspect"], r["design"]) for r in rows}:
+        task = [r for r in rows if (r["aspect"], r["design"]) == key]
+        valid = [r for r in task if r["valid"]]
+        best = max((r["tns"] for r in valid), default=None)
+        for r in task:
+            r["best_tns"] = r["valid"] and r["tns"] == best
+            r["best_wns"] = r["valid"] and r["wns"] == max(x["wns"] for x in valid)
+            summary[r["method"]]["routed"] += r["valid"]
+            summary[r["method"]]["clean"] += r["valid"] and r["drc"] == 0
+            summary[r["method"]]["best_tns"] += r["best_tns"]
+    return {
+        "benchmark": "PlaceReasoner-Bench",
+        "tasks": len({(r["aspect"], r["design"]) for r in rows}),
+        "designs": sorted({r["design"] for r in rows}, key=str.lower),
+        "drc_budget": DRC_BUDGET,
+        "methods": [{"key": k, "name": n, "kind": kd, "backbone": b, **summary[k]} for k, n, kd, b in PR_METHODS],
+        "rows": rows,
+    }
+
+
+def readme_pr_table(pr):
+    T = pr["tasks"]
+    ms = sorted(pr["methods"], key=lambda m: (-m["best_tns"], -m["routed"], -m["clean"]))
+    L = [f"| Method | Type | Routed (< {pr['drc_budget']:,} DRC) | DRC-clean | Best TNS |", "|---|---|---|---|---|"]
+    for m in ms:
+        name = f"{m['name']} ({m['backbone']})" if m["backbone"] else m["name"]
+        if m["key"] == "PlaceReasoner-Beta":
+            name = f"**{name}**"
+        L.append(f"| {name} | {'LLM agent' if m['kind'] == 'agent' else 'classical'} | {m['routed']}/{T} | {m['clean']}/{T} | {m['best_tns']}/{T} |")
+    return "\n".join(L)
+
+
+def fill(txt, tag, body):
+    a, b = f"<!-- {tag}:START -->", f"<!-- {tag}:END -->"
+    if a not in txt or b not in txt:
+        return txt
+    pre, rest = txt.split(a, 1)
+    return pre + a + "\n" + body + "\n" + b + rest.split(b, 1)[1]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--later-eval", type=Path)
@@ -157,14 +223,15 @@ def main():
     # same data as a script, so index.html also works when opened from disk
     (ROOT / "data" / "leaderboard.js").write_text("window.LEADERBOARD = " + js + ";\n")
 
+    prd = placereasoner()
+    pr = json.dumps(prd, indent=1, ensure_ascii=False)
+    (ROOT / "data" / "placereasoner.json").write_text(pr + "\n")
+    (ROOT / "data" / "placereasoner.js").write_text("window.PLACEREASONER = " + pr + ";\n")
+
     readme = ROOT / "README.md"
     if readme.exists():
-        txt = readme.read_text()
-        a_, b_ = "<!-- LEADERBOARD:START -->", "<!-- LEADERBOARD:END -->"
-        if a_ in txt and b_ in txt:
-            pre, rest = txt.split(a_, 1)
-            post = rest.split(b_, 1)[1]
-            readme.write_text(pre + a_ + "\n" + readme_table(models) + "\n" + b_ + post)
+        txt = fill(readme.read_text(), "LEADERBOARD", readme_table(models))
+        readme.write_text(fill(txt, "PLACEREASONER", readme_pr_table(prd)))
     print(f"wrote data/leaderboard.json ({len(models)} models)")
 
 
