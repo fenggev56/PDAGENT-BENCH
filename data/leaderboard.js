@@ -1,0 +1,885 @@
+window.LEADERBOARD = {
+ "benchmark": "PDAGENT-BENCH",
+ "categories": [
+  {
+   "key": "foundational",
+   "name": "Foundational Knowledge",
+   "short": "Foundational",
+   "n": 90,
+   "grader": "judge",
+   "group": "Understanding",
+   "desc": "Open-ended physical-design concepts: floorplanning, CTS, STA, DFT, extraction, device physics, flow I/O."
+  },
+  {
+   "key": "root_cause",
+   "name": "Root-Cause Analysis",
+   "short": "Root-Cause",
+   "n": 21,
+   "grader": "judge",
+   "group": "Understanding",
+   "desc": "Diagnose real backend failures (hold fixing, IR drop, congestion, SDC, multi-voltage) and propose fixes."
+  },
+  {
+   "key": "report",
+   "name": "Report Comprehension",
+   "short": "Report",
+   "n": 11,
+   "grader": "judge",
+   "group": "Understanding",
+   "desc": "Read EDA tool reports and screenshots (Innovus, PrimeTime) and explain what they show. Multimodal."
+  },
+  {
+   "key": "sta",
+   "name": "Static Timing Analysis",
+   "short": "STA",
+   "n": 11,
+   "grader": "rule",
+   "group": "Understanding",
+   "desc": "Timing calculations and multiple-choice STA questions, several from circuit diagrams. Multimodal."
+  },
+  {
+   "key": "fm",
+   "name": "Formal Verification",
+   "short": "FM",
+   "n": 22,
+   "grader": "rule",
+   "group": "Script Generation",
+   "desc": "Exact Formality commands for library setup, read, match/verify and reporting."
+  },
+  {
+   "key": "eco",
+   "name": "ECO",
+   "short": "ECO",
+   "n": 10,
+   "grader": "rule",
+   "group": "Script Generation",
+   "desc": "PrimeTime ECO commands: timing fixes, false paths, change lists, violation reports."
+  },
+  {
+   "key": "icc2",
+   "name": "P&R Script (ICC2)",
+   "short": "ICC2",
+   "n": 88,
+   "grader": "rule",
+   "group": "Script Generation",
+   "desc": "Exact IC Compiler II Tcl for setup, floorplan, power, placement, CTS, routing, EM and antenna."
+  },
+  {
+   "key": "innovus",
+   "name": "P&R Script (Innovus)",
+   "short": "Innovus",
+   "n": 90,
+   "grader": "rule",
+   "group": "Script Generation",
+   "desc": "Exact Innovus Tcl from initialization and MMMC through floorplan, CTS, ECO and sign-off export."
+  }
+ ],
+ "rounds": {
+  "r1": {
+   "label": "Earlier evaluation",
+   "date": null,
+   "judge": "LLM judge + human evaluation (paper Table 1)",
+   "settings": "temperature 0 (pass@1) / 0.8 (pass@5), provider default output caps"
+  },
+  "r2": {
+   "label": "2026-09-23 evaluation",
+   "date": "2026-09-23",
+   "judge": "GPT-5.4-mini rubric judge (blind)",
+   "settings": "reasoning effort medium, no temperature, 32K output cap"
+  }
+ },
+ "models": [
+  {
+   "name": "Qwen-VL-8B",
+   "provider": "Alibaba",
+   "open_weights": true,
+   "multimodal": true,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.533,
+     "p5": 0.573,
+     "p1_human": 0.52,
+     "p5_human": 0.558
+    },
+    "root_cause": {
+     "p1": 0.245,
+     "p5": 0.319,
+     "p1_human": 0.228,
+     "p5_human": 0.269
+    },
+    "report": {
+     "p1": 0.327,
+     "p5": 0.464,
+     "p1_human": 0.293,
+     "p5_human": 0.421
+    },
+    "sta": {
+     "p1": 0.545,
+     "p5": 0.636
+    },
+    "fm": {
+     "p1": 0.273,
+     "p5": 0.455
+    },
+    "eco": {
+     "p1": 0.1,
+     "p5": 0.1
+    },
+    "icc2": {
+     "p1": 0.068,
+     "p5": 0.102
+    },
+    "innovus": {
+     "p1": 0.122,
+     "p5": 0.133
+    }
+   },
+   "overall": {
+    "p1": 0.2766,
+    "p5": 0.3478
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "Qwen-VL-30B",
+   "provider": "Alibaba",
+   "open_weights": true,
+   "multimodal": true,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.692,
+     "p5": 0.695,
+     "p1_human": 0.661,
+     "p5_human": 0.679
+    },
+    "root_cause": {
+     "p1": 0.379,
+     "p5": 0.46,
+     "p1_human": 0.368,
+     "p5_human": 0.4
+    },
+    "report": {
+     "p1": 0.323,
+     "p5": 0.427,
+     "p1_human": 0.294,
+     "p5_human": 0.415
+    },
+    "sta": {
+     "p1": 0.545,
+     "p5": 0.636
+    },
+    "fm": {
+     "p1": 0.273,
+     "p5": 0.545
+    },
+    "eco": {
+     "p1": 0.1,
+     "p5": 0.1
+    },
+    "icc2": {
+     "p1": 0.091,
+     "p5": 0.125
+    },
+    "innovus": {
+     "p1": 0.111,
+     "p5": 0.178
+    }
+   },
+   "overall": {
+    "p1": 0.3143,
+    "p5": 0.3957
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "Qwen3-8B",
+   "provider": "Alibaba",
+   "open_weights": true,
+   "multimodal": false,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.543,
+     "p5": 0.585,
+     "p1_human": 0.488,
+     "p5_human": 0.573
+    },
+    "root_cause": {
+     "p1": 0.255,
+     "p5": 0.286,
+     "p1_human": 0.216,
+     "p5_human": 0.263
+    },
+    "fm": {
+     "p1": 0.273,
+     "p5": 0.5
+    },
+    "eco": {
+     "p1": 0.0,
+     "p5": 0.0
+    },
+    "icc2": {
+     "p1": 0.08,
+     "p5": 0.102
+    },
+    "innovus": {
+     "p1": 0.122,
+     "p5": 0.144
+    }
+   },
+   "overall": {
+    "p1": 0.2122,
+    "p5": 0.2695
+   },
+   "n_categories": 6
+  },
+  {
+   "name": "DeepSeek-Chat",
+   "provider": "DeepSeek",
+   "open_weights": true,
+   "multimodal": false,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.726,
+     "p5": 0.799,
+     "p1_human": 0.689,
+     "p5_human": 0.773
+    },
+    "root_cause": {
+     "p1": 0.486,
+     "p5": 0.521,
+     "p1_human": 0.434,
+     "p5_human": 0.473
+    },
+    "fm": {
+     "p1": 0.409,
+     "p5": 0.591
+    },
+    "eco": {
+     "p1": 0.3,
+     "p5": 0.5
+    },
+    "icc2": {
+     "p1": 0.34,
+     "p5": 0.364
+    },
+    "innovus": {
+     "p1": 0.256,
+     "p5": 0.356
+    }
+   },
+   "overall": {
+    "p1": 0.4195,
+    "p5": 0.5218
+   },
+   "n_categories": 6
+  },
+  {
+   "name": "DeepSeek-Reasoner",
+   "provider": "DeepSeek",
+   "open_weights": true,
+   "multimodal": false,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.737,
+     "p5": 0.806,
+     "p1_human": 0.684,
+     "p5_human": 0.788
+    },
+    "root_cause": {
+     "p1": 0.612,
+     "p5": 0.68,
+     "p1_human": 0.585,
+     "p5_human": 0.63
+    },
+    "fm": {
+     "p1": 0.455,
+     "p5": 0.591
+    },
+    "eco": {
+     "p1": 0.3,
+     "p5": 0.5
+    },
+    "icc2": {
+     "p1": 0.216,
+     "p5": 0.352
+    },
+    "innovus": {
+     "p1": 0.233,
+     "p5": 0.356
+    }
+   },
+   "overall": {
+    "p1": 0.4255,
+    "p5": 0.5475
+   },
+   "n_categories": 6
+  },
+  {
+   "name": "GPT-5-mini",
+   "provider": "OpenAI",
+   "open_weights": false,
+   "multimodal": true,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.8,
+     "p5": 0.82,
+     "p1_human": 0.701,
+     "p5_human": 0.79
+    },
+    "root_cause": {
+     "p1": 0.56,
+     "p5": 0.655,
+     "p1_human": 0.54,
+     "p5_human": 0.615
+    },
+    "report": {
+     "p1": 0.655,
+     "p5": 0.685,
+     "p1_human": 0.607,
+     "p5_human": 0.666
+    },
+    "sta": {
+     "p1": 0.545,
+     "p5": 0.636
+    },
+    "fm": {
+     "p1": 0.227,
+     "p5": 0.364
+    },
+    "eco": {
+     "p1": 0.3,
+     "p5": 0.3
+    },
+    "icc2": {
+     "p1": 0.057,
+     "p5": 0.114
+    },
+    "innovus": {
+     "p1": 0.133,
+     "p5": 0.189
+    }
+   },
+   "overall": {
+    "p1": 0.4096,
+    "p5": 0.4704
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "GPT-5.1",
+   "provider": "OpenAI",
+   "open_weights": false,
+   "multimodal": true,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.82,
+     "p5": 0.84,
+     "p1_human": 0.802,
+     "p5_human": 0.83
+    },
+    "root_cause": {
+     "p1": 0.655,
+     "p5": 0.674,
+     "p1_human": 0.619,
+     "p5_human": 0.624
+    },
+    "report": {
+     "p1": 0.655,
+     "p5": 0.705,
+     "p1_human": 0.604,
+     "p5_human": 0.649
+    },
+    "sta": {
+     "p1": 0.545,
+     "p5": 0.545
+    },
+    "fm": {
+     "p1": 0.545,
+     "p5": 0.636
+    },
+    "eco": {
+     "p1": 0.2,
+     "p5": 0.2
+    },
+    "icc2": {
+     "p1": 0.318,
+     "p5": 0.432
+    },
+    "innovus": {
+     "p1": 0.278,
+     "p5": 0.311
+    }
+   },
+   "overall": {
+    "p1": 0.502,
+    "p5": 0.5429
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "Claude Sonnet 4.6",
+   "provider": "Anthropic",
+   "open_weights": false,
+   "multimodal": true,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.826,
+     "p5": 0.835,
+     "p1_human": 0.794,
+     "p5_human": 0.821
+    },
+    "root_cause": {
+     "p1": 0.688,
+     "p5": 0.7,
+     "p1_human": 0.66,
+     "p5_human": 0.664
+    },
+    "report": {
+     "p1": 0.668,
+     "p5": 0.736,
+     "p1_human": 0.625,
+     "p5_human": 0.717
+    },
+    "sta": {
+     "p1": 0.636,
+     "p5": 0.636
+    },
+    "fm": {
+     "p1": 0.636,
+     "p5": 0.682
+    },
+    "eco": {
+     "p1": 0.5,
+     "p5": 0.5
+    },
+    "icc2": {
+     "p1": 0.341,
+     "p5": 0.352
+    },
+    "innovus": {
+     "p1": 0.289,
+     "p5": 0.311
+    }
+   },
+   "overall": {
+    "p1": 0.573,
+    "p5": 0.594
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "Claude Opus 4.7",
+   "provider": "Anthropic",
+   "open_weights": false,
+   "multimodal": true,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.824,
+     "p5": 0.842,
+     "p1_human": 0.784,
+     "p5_human": 0.829
+    },
+    "root_cause": {
+     "p1": 0.762,
+     "p5": 0.767,
+     "p1_human": 0.714,
+     "p5_human": 0.731
+    },
+    "report": {
+     "p1": 0.641,
+     "p5": 0.659,
+     "p1_human": 0.614,
+     "p5_human": 0.629
+    },
+    "sta": {
+     "p1": 0.727,
+     "p5": 0.727
+    },
+    "fm": {
+     "p1": 0.727,
+     "p5": 0.727
+    },
+    "eco": {
+     "p1": 0.4,
+     "p5": 0.5
+    },
+    "icc2": {
+     "p1": 0.341,
+     "p5": 0.375
+    },
+    "innovus": {
+     "p1": 0.367,
+     "p5": 0.411
+    }
+   },
+   "overall": {
+    "p1": 0.5986,
+    "p5": 0.626
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "GPT-5.5",
+   "provider": "OpenAI",
+   "open_weights": false,
+   "multimodal": true,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.804,
+     "p5": 0.83,
+     "p1_human": 0.778,
+     "p5_human": 0.807
+    },
+    "root_cause": {
+     "p1": 0.733,
+     "p5": 0.774,
+     "p1_human": 0.689,
+     "p5_human": 0.732
+    },
+    "report": {
+     "p1": 0.746,
+     "p5": 0.75,
+     "p1_human": 0.72,
+     "p5_human": 0.732
+    },
+    "sta": {
+     "p1": 0.727,
+     "p5": 0.727
+    },
+    "fm": {
+     "p1": 0.818,
+     "p5": 0.864
+    },
+    "eco": {
+     "p1": 0.5,
+     "p5": 0.6
+    },
+    "icc2": {
+     "p1": 0.455,
+     "p5": 0.58
+    },
+    "innovus": {
+     "p1": 0.422,
+     "p5": 0.511
+    }
+   },
+   "overall": {
+    "p1": 0.6506,
+    "p5": 0.7045
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "GPT-5.4-mini",
+   "provider": "OpenAI",
+   "open_weights": false,
+   "multimodal": true,
+   "round": "r1",
+   "scores": {
+    "foundational": {
+     "p1": 0.723,
+     "p5": 0.741,
+     "p1_human": 0.668,
+     "p5_human": 0.726
+    },
+    "root_cause": {
+     "p1": 0.545,
+     "p5": 0.581,
+     "p1_human": 0.502,
+     "p5_human": 0.526
+    },
+    "report": {
+     "p1": 0.461,
+     "p5": 0.514,
+     "p1_human": 0.422,
+     "p5_human": 0.487
+    },
+    "sta": {
+     "p1": 0.636,
+     "p5": 0.636
+    },
+    "fm": {
+     "p1": 0.591,
+     "p5": 0.727
+    },
+    "eco": {
+     "p1": 0.5,
+     "p5": 0.5
+    },
+    "icc2": {
+     "p1": 0.295,
+     "p5": 0.398
+    },
+    "innovus": {
+     "p1": 0.267,
+     "p5": 0.356
+    }
+   },
+   "overall": {
+    "p1": 0.5023,
+    "p5": 0.5566
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "DeepSeek-V4.1-Flash",
+   "provider": "DeepSeek",
+   "open_weights": true,
+   "multimodal": true,
+   "api_model": "deepseek-flash",
+   "round": "r2",
+   "scores": {
+    "foundational": {
+     "p1": 0.8483,
+     "p5": 0.8634,
+     "p5_best": 0.93
+    },
+    "root_cause": {
+     "p1": 0.669,
+     "p5": 0.659,
+     "p5_best": 0.7738
+    },
+    "report": {
+     "p1": 0.5045,
+     "p5": 0.5664,
+     "p5_best": 0.7045
+    },
+    "sta": {
+     "p1": 0.7273,
+     "p5": 0.7273
+    },
+    "fm": {
+     "p1": 0.7727,
+     "p5": 0.9545
+    },
+    "eco": {
+     "p1": 0.4,
+     "p5": 0.5
+    },
+    "icc2": {
+     "p1": 0.3636,
+     "p5": 0.4659
+    },
+    "innovus": {
+     "p1": 0.3222,
+     "p5": 0.4444
+    }
+   },
+   "overall": {
+    "p1": 0.5759,
+    "p5": 0.6476
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "GPT-5.6 Luna",
+   "provider": "OpenAI",
+   "open_weights": false,
+   "multimodal": true,
+   "api_model": "gpt-5.6-luna",
+   "round": "r2",
+   "scores": {
+    "foundational": {
+     "p1": 0.8483,
+     "p5": 0.8294,
+     "p5_best": 0.8939
+    },
+    "root_cause": {
+     "p1": 0.5762,
+     "p5": 0.59,
+     "p5_best": 0.7071
+    },
+    "report": {
+     "p1": 0.6,
+     "p5": 0.6036,
+     "p5_best": 0.7182
+    },
+    "sta": {
+     "p1": 0.4545,
+     "p5": 0.5455
+    },
+    "fm": {
+     "p1": 0.5909,
+     "p5": 0.7727
+    },
+    "eco": {
+     "p1": 0.6,
+     "p5": 0.5
+    },
+    "icc2": {
+     "p1": 0.3864,
+     "p5": 0.4545
+    },
+    "innovus": {
+     "p1": 0.3667,
+     "p5": 0.4667
+    }
+   },
+   "overall": {
+    "p1": 0.5529,
+    "p5": 0.5953
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "GPT-5.6 Sol",
+   "provider": "OpenAI",
+   "open_weights": false,
+   "multimodal": true,
+   "api_model": "gpt-5.6-sol",
+   "round": "r2",
+   "scores": {
+    "foundational": {
+     "p1": 0.8567,
+     "p5": 0.8706,
+     "p5_best": 0.9294
+    },
+    "root_cause": {
+     "p1": 0.6571,
+     "p5": 0.6714,
+     "p5_best": 0.7786
+    },
+    "report": {
+     "p1": 0.6818,
+     "p5": 0.6582,
+     "p5_best": 0.7773
+    },
+    "sta": {
+     "p1": 0.7273,
+     "p5": 0.6364
+    },
+    "fm": {
+     "p1": 0.8182,
+     "p5": 0.8182
+    },
+    "eco": {
+     "p1": 0.4,
+     "p5": 0.4
+    },
+    "icc2": {
+     "p1": 0.5227,
+     "p5": 0.6023
+    },
+    "innovus": {
+     "p1": 0.4111,
+     "p5": 0.5111
+    }
+   },
+   "overall": {
+    "p1": 0.6344,
+    "p5": 0.646
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "Claude Sonnet 5",
+   "provider": "Anthropic",
+   "open_weights": false,
+   "multimodal": true,
+   "api_model": "claude-sonnet-5",
+   "round": "r2",
+   "scores": {
+    "foundational": {
+     "p1": 0.8289,
+     "p5": 0.8319,
+     "p5_best": 0.9028
+    },
+    "root_cause": {
+     "p1": 0.5738,
+     "p5": 0.5786,
+     "p5_best": 0.7238
+    },
+    "report": {
+     "p1": 0.6227,
+     "p5": 0.6082,
+     "p5_best": 0.7182
+    },
+    "sta": {
+     "p1": 0.5455,
+     "p5": 0.7273
+    },
+    "fm": {
+     "p1": 0.5455,
+     "p5": 0.6364
+    },
+    "eco": {
+     "p1": 0.4,
+     "p5": 0.6
+    },
+    "icc2": {
+     "p1": 0.2727,
+     "p5": 0.3409
+    },
+    "innovus": {
+     "p1": 0.3333,
+     "p5": 0.3667
+    }
+   },
+   "overall": {
+    "p1": 0.5153,
+    "p5": 0.5862
+   },
+   "n_categories": 8
+  },
+  {
+   "name": "Claude Opus 5",
+   "provider": "Anthropic",
+   "open_weights": false,
+   "multimodal": true,
+   "api_model": "claude-opus-5",
+   "round": "r2",
+   "scores": {
+    "foundational": {
+     "p1": 0.9,
+     "p5": 0.9079,
+     "p5_best": 0.96
+    },
+    "root_cause": {
+     "p1": 0.7476,
+     "p5": 0.7852,
+     "p5_best": 0.8786
+    },
+    "report": {
+     "p1": 0.5364,
+     "p5": 0.6836,
+     "p5_best": 0.8091
+    },
+    "sta": {
+     "p1": 0.6364,
+     "p5": 0.7273
+    },
+    "fm": {
+     "p1": 0.8182,
+     "p5": 0.9091
+    },
+    "eco": {
+     "p1": 0.4,
+     "p5": 0.4
+    },
+    "icc2": {
+     "p1": 0.3977,
+     "p5": 0.5341
+    },
+    "innovus": {
+     "p1": 0.4,
+     "p5": 0.4444
+    }
+   },
+   "overall": {
+    "p1": 0.6045,
+    "p5": 0.674
+   },
+   "n_categories": 8
+  }
+ ]
+};
